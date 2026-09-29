@@ -1,0 +1,41 @@
+# Task 1 — green run after implementing StudyItem validation
+# Date: 2026-09-29
+# Command: swift test --filter 'StudyItemValidationTests|StudyPlannerPublicTests/testValidItemStoresValues|StudyPlannerPublicTests/testBlankTitleIsRejected'
+# (filtered: testIncompleteMinutesAndCompletion still hits the StudyPlan stub until task 4)
+
+Building for debugging...
+Build complete! (1.41s)
+Test Suite 'Selected tests' started at 2026-09-29 14:47:43.405.
+Test Suite 'StudyPlannerPackageTests.xctest' started at 2026-09-29 14:47:43.406.
+Test Suite 'StudyItemValidationTests' started at 2026-09-29 14:47:43.406.
+Test Case '-[StudyPlannerTests.StudyItemValidationTests testBlankTitleTakesPrecedenceOverNonPositiveMinutes]' started.
+Test Case '-[StudyPlannerTests.StudyItemValidationTests testBlankTitleTakesPrecedenceOverNonPositiveMinutes]' passed (0.002 seconds).
+Test Case '-[StudyPlannerTests.StudyItemValidationTests testEmptyIDIsAccepted]' started.
+Test Case '-[StudyPlannerTests.StudyItemValidationTests testEmptyIDIsAccepted]' passed (0.000 seconds).
+Test Case '-[StudyPlannerTests.StudyItemValidationTests testEmptyTitleThrowsBlankTitle]' started.
+Test Case '-[StudyPlannerTests.StudyItemValidationTests testEmptyTitleThrowsBlankTitle]' passed (0.000 seconds).
+Test Case '-[StudyPlannerTests.StudyItemValidationTests testNonPositiveMinutesThrow]' started.
+Test Case '-[StudyPlannerTests.StudyItemValidationTests testNonPositiveMinutesThrow]' passed (0.000 seconds).
+Test Case '-[StudyPlannerTests.StudyItemValidationTests testOneMinuteIsAccepted]' started.
+Test Case '-[StudyPlannerTests.StudyItemValidationTests testOneMinuteIsAccepted]' passed (0.000 seconds).
+Test Case '-[StudyPlannerTests.StudyItemValidationTests testValidItemStoresAllValuesAsGiven]' started.
+Test Case '-[StudyPlannerTests.StudyItemValidationTests testValidItemStoresAllValuesAsGiven]' passed (0.000 seconds).
+Test Case '-[StudyPlannerTests.StudyItemValidationTests testWhitespaceOnlyTitlesThrowBlankTitle]' started.
+Test Case '-[StudyPlannerTests.StudyItemValidationTests testWhitespaceOnlyTitlesThrowBlankTitle]' passed (0.000 seconds).
+Test Suite 'StudyItemValidationTests' passed at 2026-09-29 14:47:43.409.
+	 Executed 7 tests, with 0 failures (0 unexpected) in 0.003 (0.003) seconds
+Test Suite 'StudyPlannerPublicTests' started at 2026-09-29 14:47:43.409.
+Test Case '-[StudyPlannerTests.StudyPlannerPublicTests testBlankTitleIsRejected]' started.
+Test Case '-[StudyPlannerTests.StudyPlannerPublicTests testBlankTitleIsRejected]' passed (0.000 seconds).
+Test Case '-[StudyPlannerTests.StudyPlannerPublicTests testValidItemStoresValues]' started.
+Test Case '-[StudyPlannerTests.StudyPlannerPublicTests testValidItemStoresValues]' passed (0.000 seconds).
+Test Suite 'StudyPlannerPublicTests' passed at 2026-09-29 14:47:43.410.
+	 Executed 2 tests, with 0 failures (0 unexpected) in 0.000 (0.000) seconds
+Test Suite 'StudyPlannerPackageTests.xctest' passed at 2026-09-29 14:47:43.410.
+	 Executed 9 tests, with 0 failures (0 unexpected) in 0.003 (0.004) seconds
+Test Suite 'Selected tests' passed at 2026-09-29 14:47:43.410.
+	 Executed 9 tests, with 0 failures (0 unexpected) in 0.003 (0.005) seconds
+◇ Test run started.
+↳ Testing Library Version: 1501
+↳ Target Platform: arm64e-apple-macos14.0
+✔ Test run with 0 tests in 0 suites passed after 0.001 seconds.
