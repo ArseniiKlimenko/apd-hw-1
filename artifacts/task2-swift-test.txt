@@ -1,0 +1,68 @@
+# Task 2 — green run after explicit init(from:) and decode(from:)
+# Date: 2026-09-29
+# Command: swift test --filter 'StudyPlanCodableTests|StudyItemValidationTests|StudyPlannerPublicTests/testValidItemStoresValues|StudyPlannerPublicTests/testBlankTitleIsRejected'
+# (filtered: testIncompleteMinutesAndCompletion still hits the markCompleted stub until task 4)
+
+Building for debugging...
+Build complete! (2.16s)
+Test Suite 'Selected tests' started at 2026-09-29 22:59:29.892.
+Test Suite 'StudyPlannerPackageTests.xctest' started at 2026-09-29 22:59:29.893.
+Test Suite 'StudyItemValidationTests' started at 2026-09-29 22:59:29.893.
+Test Case '-[StudyPlannerTests.StudyItemValidationTests testBlankTitleTakesPrecedenceOverNonPositiveMinutes]' started.
+Test Case '-[StudyPlannerTests.StudyItemValidationTests testBlankTitleTakesPrecedenceOverNonPositiveMinutes]' passed (0.002 seconds).
+Test Case '-[StudyPlannerTests.StudyItemValidationTests testEmptyIDIsAccepted]' started.
+Test Case '-[StudyPlannerTests.StudyItemValidationTests testEmptyIDIsAccepted]' passed (0.000 seconds).
+Test Case '-[StudyPlannerTests.StudyItemValidationTests testEmptyTitleThrowsBlankTitle]' started.
+Test Case '-[StudyPlannerTests.StudyItemValidationTests testEmptyTitleThrowsBlankTitle]' passed (0.000 seconds).
+Test Case '-[StudyPlannerTests.StudyItemValidationTests testNonPositiveMinutesThrow]' started.
+Test Case '-[StudyPlannerTests.StudyItemValidationTests testNonPositiveMinutesThrow]' passed (0.000 seconds).
+Test Case '-[StudyPlannerTests.StudyItemValidationTests testOneMinuteIsAccepted]' started.
+Test Case '-[StudyPlannerTests.StudyItemValidationTests testOneMinuteIsAccepted]' passed (0.000 seconds).
+Test Case '-[StudyPlannerTests.StudyItemValidationTests testValidItemStoresAllValuesAsGiven]' started.
+Test Case '-[StudyPlannerTests.StudyItemValidationTests testValidItemStoresAllValuesAsGiven]' passed (0.000 seconds).
+Test Case '-[StudyPlannerTests.StudyItemValidationTests testWhitespaceOnlyTitlesThrowBlankTitle]' started.
+Test Case '-[StudyPlannerTests.StudyItemValidationTests testWhitespaceOnlyTitlesThrowBlankTitle]' passed (0.000 seconds).
+Test Suite 'StudyItemValidationTests' passed at 2026-09-29 22:59:29.897.
+	 Executed 7 tests, with 0 failures (0 unexpected) in 0.003 (0.004) seconds
+Test Suite 'StudyPlanCodableTests' started at 2026-09-29 22:59:29.897.
+Test Case '-[StudyPlannerTests.StudyPlanCodableTests testDecodeFromEmptyArrayGivesEmptyPlan]' started.
+Test Case '-[StudyPlannerTests.StudyPlanCodableTests testDecodeFromEmptyArrayGivesEmptyPlan]' passed (0.000 seconds).
+Test Case '-[StudyPlannerTests.StudyPlanCodableTests testDecodeFromFixtureReadsAllItemsInFileOrder]' started.
+Test Case '-[StudyPlannerTests.StudyPlanCodableTests testDecodeFromFixtureReadsAllItemsInFileOrder]' passed (0.001 seconds).
+Test Case '-[StudyPlannerTests.StudyPlanCodableTests testDecodeFromPropagatesItemValidationError]' started.
+Test Case '-[StudyPlannerTests.StudyPlanCodableTests testDecodeFromPropagatesItemValidationError]' passed (0.000 seconds).
+Test Case '-[StudyPlannerTests.StudyPlanCodableTests testDecodeFromRejectsKeyedObject]' started.
+Test Case '-[StudyPlannerTests.StudyPlanCodableTests testDecodeFromRejectsKeyedObject]' passed (0.000 seconds).
+Test Case '-[StudyPlannerTests.StudyPlanCodableTests testDecodeFromRejectsMalformedJSON]' started.
+Test Case '-[StudyPlannerTests.StudyPlanCodableTests testDecodeFromRejectsMalformedJSON]' passed (0.000 seconds).
+Test Case '-[StudyPlannerTests.StudyPlanCodableTests testDecodingItemWithBlankTitleThrowsBlankTitle]' started.
+Test Case '-[StudyPlannerTests.StudyPlanCodableTests testDecodingItemWithBlankTitleThrowsBlankTitle]' passed (0.000 seconds).
+Test Case '-[StudyPlannerTests.StudyPlanCodableTests testDecodingItemWithMissingRequiredKeyThrowsKeyNotFound]' started.
+Test Case '-[StudyPlannerTests.StudyPlanCodableTests testDecodingItemWithMissingRequiredKeyThrowsKeyNotFound]' passed (0.000 seconds).
+Test Case '-[StudyPlannerTests.StudyPlanCodableTests testDecodingItemWithNonPositiveMinutesThrows]' started.
+Test Case '-[StudyPlannerTests.StudyPlanCodableTests testDecodingItemWithNonPositiveMinutesThrows]' passed (0.000 seconds).
+Test Case '-[StudyPlannerTests.StudyPlanCodableTests testDecodingItemWithoutIsCompletedDefaultsToFalse]' started.
+Test Case '-[StudyPlannerTests.StudyPlanCodableTests testDecodingItemWithoutIsCompletedDefaultsToFalse]' passed (0.000 seconds).
+Test Case '-[StudyPlannerTests.StudyPlanCodableTests testDecodingItemWithWrongValueTypesThrowsDecodingError]' started.
+Test Case '-[StudyPlannerTests.StudyPlanCodableTests testDecodingItemWithWrongValueTypesThrowsDecodingError]' passed (0.000 seconds).
+Test Case '-[StudyPlannerTests.StudyPlanCodableTests testItemRoundTripsThroughJSON]' started.
+Test Case '-[StudyPlannerTests.StudyPlanCodableTests testItemRoundTripsThroughJSON]' passed (0.000 seconds).
+Test Case '-[StudyPlannerTests.StudyPlanCodableTests testKeyedPlanDecodesItemsInOrder]' started.
+Test Case '-[StudyPlannerTests.StudyPlanCodableTests testKeyedPlanDecodesItemsInOrder]' passed (0.000 seconds).
+Test Case '-[StudyPlannerTests.StudyPlanCodableTests testKeyedPlanPropagatesItemValidationError]' started.
+Test Case '-[StudyPlannerTests.StudyPlanCodableTests testKeyedPlanPropagatesItemValidationError]' passed (0.000 seconds).
+Test Case '-[StudyPlannerTests.StudyPlanCodableTests testPlanRoundTripsThroughKeyedJSON]' started.
+Test Case '-[StudyPlannerTests.StudyPlanCodableTests testPlanRoundTripsThroughKeyedJSON]' passed (0.000 seconds).
+Test Suite 'StudyPlanCodableTests' passed at 2026-09-29 22:59:29.902.
+	 Executed 14 tests, with 0 failures (0 unexpected) in 0.004 (0.005) seconds
+Test Suite 'StudyPlannerPublicTests' started at 2026-09-29 22:59:29.902.
+Test Case '-[StudyPlannerTests.StudyPlannerPublicTests testBlankTitleIsRejected]' started.
+Test Case '-[StudyPlannerTests.StudyPlannerPublicTests testBlankTitleIsRejected]' passed (0.000 seconds).
+Test Case '-[StudyPlannerTests.StudyPlannerPublicTests testValidItemStoresValues]' started.
+Test Case '-[StudyPlannerTests.StudyPlannerPublicTests testValidItemStoresValues]' passed (0.000 seconds).
+Test Suite 'StudyPlannerPublicTests' passed at 2026-09-29 22:59:29.902.
+	 Executed 2 tests, with 0 failures (0 unexpected) in 0.000 (0.000) seconds
+Test Suite 'StudyPlannerPackageTests.xctest' passed at 2026-09-29 22:59:29.902.
+	 Executed 23 tests, with 0 failures (0 unexpected) in 0.007 (0.009) seconds
+Test Suite 'Selected tests' passed at 2026-09-29 22:59:29.902.
+	 Executed 23 tests, with 0 failures (0 unexpected) in 0.007 (0.010) seconds

@@ -1,0 +1,31 @@
+# Task 2 — red run: synthesized Decodable bypasses validation
+# Date: 2026-09-29
+# Command: swift test --filter 'StudyPlanCodableTests/(testDecodingItem|testItemRoundTrips)'
+# Blank title / zero minutes decode without error; missing isCompleted throws keyNotFound.
+
+Building for debugging...
+Build complete! (1.53s)
+Test Suite 'Selected tests' started at 2026-09-29 22:57:27.910.
+Test Suite 'StudyPlannerPackageTests.xctest' started at 2026-09-29 22:57:27.912.
+Test Suite 'StudyPlanCodableTests' started at 2026-09-29 22:57:27.912.
+Test Case '-[StudyPlannerTests.StudyPlanCodableTests testDecodingItemWithBlankTitleThrowsBlankTitle]' started.
+Tests/StudyPlannerTests/StudyPlanCodableTests.swift:10: error: -[StudyPlannerTests.StudyPlanCodableTests testDecodingItemWithBlankTitleThrowsBlankTitle] : XCTAssertThrowsError failed: did not throw an error
+Test Case '-[StudyPlannerTests.StudyPlanCodableTests testDecodingItemWithBlankTitleThrowsBlankTitle]' failed (0.242 seconds).
+Test Case '-[StudyPlannerTests.StudyPlanCodableTests testDecodingItemWithMissingRequiredKeyThrowsKeyNotFound]' started.
+Test Case '-[StudyPlannerTests.StudyPlanCodableTests testDecodingItemWithMissingRequiredKeyThrowsKeyNotFound]' passed (0.000 seconds).
+Test Case '-[StudyPlannerTests.StudyPlanCodableTests testDecodingItemWithNonPositiveMinutesThrows]' started.
+Tests/StudyPlannerTests/StudyPlanCodableTests.swift:16: error: -[StudyPlannerTests.StudyPlanCodableTests testDecodingItemWithNonPositiveMinutesThrows] : XCTAssertThrowsError failed: did not throw an error
+Test Case '-[StudyPlannerTests.StudyPlanCodableTests testDecodingItemWithNonPositiveMinutesThrows]' failed (0.000 seconds).
+Test Case '-[StudyPlannerTests.StudyPlanCodableTests testDecodingItemWithoutIsCompletedDefaultsToFalse]' started.
+Tests/StudyPlannerTests/StudyPlanCodableTests.swift:160: error: -[StudyPlannerTests.StudyPlanCodableTests testDecodingItemWithoutIsCompletedDefaultsToFalse] : failed: caught error: "keyNotFound(CodingKeys(stringValue: "isCompleted", intValue: nil), Swift.DecodingError.Context(codingPath: [], debugDescription: "No value associated with key CodingKeys(stringValue: \"isCompleted\", intValue: nil) (\"isCompleted\").", underlyingError: nil))"
+Test Case '-[StudyPlannerTests.StudyPlanCodableTests testDecodingItemWithoutIsCompletedDefaultsToFalse]' failed (0.002 seconds).
+Test Case '-[StudyPlannerTests.StudyPlanCodableTests testDecodingItemWithWrongValueTypesThrowsDecodingError]' started.
+Test Case '-[StudyPlannerTests.StudyPlanCodableTests testDecodingItemWithWrongValueTypesThrowsDecodingError]' passed (0.000 seconds).
+Test Case '-[StudyPlannerTests.StudyPlanCodableTests testItemRoundTripsThroughJSON]' started.
+Test Case '-[StudyPlannerTests.StudyPlanCodableTests testItemRoundTripsThroughJSON]' passed (0.000 seconds).
+Test Suite 'StudyPlanCodableTests' failed at 2026-09-29 22:57:28.157.
+	 Executed 6 tests, with 3 failures (1 unexpected) in 0.245 (0.246) seconds
+Test Suite 'StudyPlannerPackageTests.xctest' failed at 2026-09-29 22:57:28.157.
+	 Executed 6 tests, with 3 failures (1 unexpected) in 0.245 (0.246) seconds
+Test Suite 'Selected tests' failed at 2026-09-29 22:57:28.157.
+	 Executed 6 tests, with 3 failures (1 unexpected) in 0.245 (0.247) seconds

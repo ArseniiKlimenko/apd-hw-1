@@ -76,3 +76,57 @@ I am working in manual mode in claude code, so I can see a diff before accept ev
 ### Artifact links
 
 - [artifacts/task1-swift-test.txt](artifacts/task1-swift-test.txt)
+
+---
+
+## Entry 3 — Task 2: Codable boundaries
+
+### Tool/agent task
+
+Asked the agent to explain how `init(from:)` works and why explicit
+implementations are needed, to detail the trade-offs of R-5 and the risks of
+R-6, and then to implement task 2 test-first according to R-4 (missing
+`isCompleted` → `false`), R-5 (option A: propagate `StudyPlanError`
+unchanged) and R-6 (`decode(from:)` accepts a top-level array only).
+
+### Output reviewed
+
+- `Tests/StudyPlannerTests/StudyPlanCodableTests.swift` — 14 tests: item
+  decoding (blank title, zero minutes, missing `isCompleted`, missing required
+  key, wrong value types / unknown category, round-trip), keyed plan decoding
+  (order preserved, item error propagated, round-trip and `{"items": …}`
+  shape), `decode(from:)` (fixture, `[]`, item error propagated, keyed object
+  rejected, malformed JSON).
+- `Sources/StudyPlanner/StudyPlanner.swift` — private `CodingKeys` and
+  `public init(from:)` for `StudyItem` and `StudyPlan` (implementations of the
+  existing `Decodable` requirement), body of `decode(from:)`, and a
+  storing-only `StudyPlan.init(items:)` (duplicate check deferred to task 3
+  because it depends on R-7). Encoding stays synthesized.
+- Agent corrections during this task:
+  - It had claimed a global `static let decoder = JSONDecoder()` causes Swift 6
+    concurrency problems; a local check showed it compiles cleanly
+    (`JSONDecoder` is `Sendable`). A local decoder is still used, for
+    simplicity.
+  - The first red run mixed two causes: the blank-title and zero-minute JSON
+    lacked `isCompleted`, so the synthesized decoder failed on the missing
+    key rather than exposing the validation bypass. Those two tests now
+    include `"isCompleted": false`, so each test checks one rule.
+
+### Accepted/rejected/revised decision
+
+I accepted the AI's suggestions regarding key parts of this component, but only after analyzing the pros, cons, and risks of the proposed solutions. My choices prioritized ease of implementation—ensuring the solution covered most potential edge cases—and clarity; for instance, the absence of an `isCompleted` flag implies `false`. A specific example of choosing a simpler implementation despite its downsides—because it still satisfied the necessary logic—is how the decoder handles JSON that violates a domain rule (such as an empty `title`): it throws the same `StudyPlanError` as the standard initializer rather than wrapping it in a `DecodingError`. This ensures that a single rule always results in a specific error that tests can precisely verify.
+
+### Verification command/result
+
+- Red: `swift test --filter 'StudyPlanCodableTests/(testDecodingItem|testItemRoundTrips)'`
+  against the synthesized decoder — 6 tests, 3 failures (blank title and zero
+  minutes decoded without error; missing `isCompleted` threw `keyNotFound`).
+- Green: `swift test --filter 'StudyPlanCodableTests|StudyItemValidationTests|StudyPlannerPublicTests/testValidItemStoresValues|StudyPlannerPublicTests/testBlankTitleIsRejected'`
+  — 23 tests, 0 failures.
+- Full `swift test` now crashes at `Implement completion mutation` (expected
+  until task 4).
+
+### Artifact links
+
+- [artifacts/task2-red-synthesized-decoder.txt](artifacts/task2-red-synthesized-decoder.txt)
+- [artifacts/task2-swift-test.txt](artifacts/task2-swift-test.txt)

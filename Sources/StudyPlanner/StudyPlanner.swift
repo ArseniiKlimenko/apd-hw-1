@@ -39,17 +39,45 @@ public struct StudyItem: Codable, Equatable {
         self.category = category
         self.isCompleted = isCompleted
     }
+
+    private enum CodingKeys: String, CodingKey {
+        case id, title, estimatedMinutes, category, isCompleted
+    }
+
+    // Decoding goes through the validating initializer; its StudyPlanError propagates unchanged.
+    public init(from decoder: any Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        try self.init(
+            id: container.decode(String.self, forKey: .id),
+            title: container.decode(String.self, forKey: .title),
+            estimatedMinutes: container.decode(Int.self, forKey: .estimatedMinutes),
+            category: container.decode(StudyCategory.self, forKey: .category),
+            isCompleted: container.decodeIfPresent(Bool.self, forKey: .isCompleted) ?? false
+        )
+    }
 }
 
 public struct StudyPlan: Codable, Equatable {
     public private(set) var items: [StudyItem]
 
     public init(items: [StudyItem]) throws {
-        fatalError("Implement plan validation")
+        // TODO(task 3): reject duplicate IDs.
+        self.items = items
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case items
+    }
+
+    // Keyed {"items": [...]} format; every item and the plan itself are validated.
+    public init(from decoder: any Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        try self.init(items: container.decode([StudyItem].self, forKey: .items))
     }
 
     public static func decode(from data: Data) throws -> StudyPlan {
-        fatalError("Implement array decoding")
+        let items = try JSONDecoder().decode([StudyItem].self, from: data)
+        return try StudyPlan(items: items)
     }
 
     public func items(in category: StudyCategory) -> [StudyItem] {
