@@ -55,6 +55,11 @@ public struct StudyItem: Codable, Equatable {
             isCompleted: container.decodeIfPresent(Bool.self, forKey: .isCompleted) ?? false
         )
     }
+
+    // Internal: isCompleted stays read-only outside the module; StudyPlan.markCompleted(id:) uses this.
+    mutating func markCompleted() {
+        isCompleted = true
+    }
 }
 
 public struct StudyPlan: Codable, Equatable {
@@ -88,12 +93,19 @@ public struct StudyPlan: Codable, Equatable {
             .sorted(by: Self.isOrderedBefore)
     }
 
+    // Plain + traps on overflow rather than returning a wrong sum.
     public func incompleteMinutes() -> Int {
-        fatalError("Implement incomplete-minute query")
+        items
+            .filter { !$0.isCompleted }
+            .reduce(0) { $0 + $1.estimatedMinutes }
     }
 
+    // Unknown ID throws before any change; an already completed item stays as is.
     public mutating func markCompleted(id: String) throws {
-        fatalError("Implement completion mutation")
+        guard let index = items.firstIndex(where: { $0.id == id }) else {
+            throw StudyPlanError.unknownID(id)
+        }
+        items[index].markCompleted()
     }
 
     public mutating func importMerging(_ importedItems: [StudyItem]) throws {

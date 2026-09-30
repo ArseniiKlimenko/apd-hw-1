@@ -1,0 +1,12 @@
+# Task 4 — red run: markCompleted / incompleteMinutes were fatalError stubs
+# Date: 2026-09-30
+# Command: swift test --filter StudyPlanQueriesAndCompletionTests
+
+Building for debugging...
+Build complete! (1.89s)
+error: Exited with unexpected signal code 5
+Test Suite 'Selected tests' started at 2026-09-30 14:03:12.458.
+Test Suite 'StudyPlannerPackageTests.xctest' started at 2026-09-30 14:03:12.459.
+Test Suite 'StudyPlanQueriesAndCompletionTests' started at 2026-09-30 14:03:12.459.
+Test Case '-[StudyPlannerTests.StudyPlanQueriesAndCompletionTests testCompletionIsVisibleInQueriesAndEncodedJSON]' started.
+StudyPlanner/StudyPlanner.swift:96: Fatal error: Implement completion mutation

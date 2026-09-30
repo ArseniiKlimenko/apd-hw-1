@@ -31,7 +31,7 @@ files, one `XCTestCase` subclass per task.
 | R-9 | Where does title-then-ID ordering apply? | Only to `items(in:)`; `items` keeps insertion order. | The bonus requires replacing items "at their current positions" and appending new IDs in ID order, which only makes sense if `items` is not re-sorted. Keeps JSON order on decode. |
 | R-10 | How are titles compared? | `localizedStandardCompare` (case-insensitive, numeric-aware, locale-aware, e.g. `"Item 2"` before `"Item 10"`). Ties (`.orderedSame`) are broken by `id` using `<`. | Student's choice: human-friendly order, including the Ukrainian alphabet. The agent recommended `<` for strict determinism; the locale risk is accepted and recorded under Risks. |
 
-Decision for task 4 (R-11) is recorded before the task starts.
+| R-11 | What if `incompleteMinutes()` overflows `Int`? | Plain `+`: Swift traps on overflow. | Never returns a wrong number; standard Swift behavior; no rule beyond the task. `&+` would silently return a negative sum, saturation would hide the problem, and throwing or returning an optional would change the public API. |
 
 ## Acceptance criteria
 
@@ -79,9 +79,25 @@ Decision for task 4 (R-11) is recorded before the task starts.
   `"Item 10"`); equal titles are ordered by `id`; the result does not depend
   on insertion order.
 
-### Task 4 and bonus
+### Task 4 — Queries and completion
 
-To be detailed before each task starts.
+- `items(in:)` returns only that category's items; a category without items
+  and an empty plan give `[]`.
+- `incompleteMinutes()` sums `estimatedMinutes` of items with
+  `isCompleted == false` (fixture: 45 + 90 = 135); it is `0` for an empty
+  plan and when everything is completed.
+- `markCompleted(id:)` sets `isCompleted` of that item only; other items and
+  the order of `items` are unchanged.
+- An unknown ID (including one differing only in case, R-8) throws
+  `.unknownID(id)` and leaves the plan unchanged.
+- Completion is idempotent: marking an already completed item again does not
+  throw and changes nothing.
+- Completion is visible in `items(in:)`, `incompleteMinutes()` and in encoded
+  JSON.
+
+### Bonus
+
+To be detailed if attempted.
 
 ## Implementation steps
 
@@ -94,7 +110,11 @@ To be detailed before each task starts.
    `Tests/StudyPlannerTests/StudyPlanDuplicatesAndOrderingTests.swift`, then
    the duplicate-ID check in `StudyPlan.init(items:)` and `items(in:)`
    (filter + title-then-ID ordering) with private helpers.
-4. Task 4 — `items(in:)`, `incompleteMinutes()`, `markCompleted(id:)`.
+4. Task 4 — tests in
+   `Tests/StudyPlannerTests/StudyPlanQueriesAndCompletionTests.swift`, then
+   `incompleteMinutes()`, `markCompleted(id:)` and an `internal` completion
+   helper on `StudyItem` (needed because `isCompleted` is `private(set)`).
+   `items(in:)` was implemented in task 3.
 5. Optional bonus — `importMerging(_:)`.
 
 ## Risks
@@ -132,6 +152,11 @@ To be detailed before each task starts.
   locale (plain Latin letters with different first letters, and numeric
   suffixes); a hidden test expecting plain `<` ordering (e.g. `"B"` before
   `"a"`) would fail.
+- R-11: any positive `estimatedMinutes` is valid, so items with huge values
+  (e.g. `Int.max`, reachable from JSON) make `incompleteMinutes()` trap on
+  overflow. `Int.max` minutes is about 17.5 trillion years, so this is
+  accepted; a trap cannot be caught by XCTest, so it is documented rather
+  than tested.
 
 ## `swift test` verification
 
@@ -147,3 +172,5 @@ To be detailed before each task starts.
 | 2026-09-30 | `swift test --filter 'StudyPlanDuplicatesAndOrderingTests/(testDuplicate\|testFirstRepeat\|testIDsDiffering\|testCanonically)'` (no duplicate check yet) | 6 tests, 8 assertion failures (`did not throw`) ([log](artifacts/task3-red-duplicates.txt)); ordering tests crash at `Implement category query` | Red phase confirmed; implement duplicate check and `items(in:)`. |
 | 2026-09-30 | `swift test --filter 'StudyPlanDuplicatesAndOrderingTests\|StudyPlanCodableTests\|StudyItemValidationTests\|StudyPlannerPublicTests/testValidItemStoresValues\|StudyPlannerPublicTests/testBlankTitleIsRejected'` | 35 tests, 0 failures ([log](artifacts/task3-swift-test.txt)) | Task 3 done. |
 | 2026-09-30 | `swift test` | Crash at `Implement completion mutation` | Expected until task 4. |
+| 2026-09-30 | `swift test --filter StudyPlanQueriesAndCompletionTests` (stubs unchanged) | Crash at `Implement completion mutation` ([log](artifacts/task4-red.txt)) | Red phase confirmed; implement `incompleteMinutes()` and `markCompleted(id:)`. |
+| 2026-09-30 | `swift test` | **47 tests, 0 failures, exit code 0** ([log](artifacts/swift-test-full.txt)) | Tasks 1–4 done. Public declarations checked against the template (`git show aca442f:…`): identical apart from the two `public init(from:)` `Decodable` implementations; `StudyPlannerPublicTests.swift` unchanged. |

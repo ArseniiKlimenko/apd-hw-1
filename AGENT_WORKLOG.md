@@ -166,7 +166,7 @@ accepting the private helpers and asked for a plain-language explanation of
 
 ### Accepted/rejected/revised decision
 
-The solutions in this section were more straightforward, though there were plenty of options; my choice reflects my personal perspective, even though I understand the scenarios where alternative implementations might be preferred. Regarding which ID to return when duplicates exist in the plan, I didn't reinvent the wheel; I chose the simplest implementation—returning the ID of the first occurrence. Comparing IDs was also a simple decision—an exact match—and I avoided normalization elsewhere to minimize the risk of overlooking potential edge cases. Comparing titles, however, was trickier; while I could have compared strings based on Unicode character codes, I ultimately opted for `localizedStandardCompare`. This type of sorting feels more natural to me; since the app is simple and this internal functionality is visible to the user, it is better for the behavior to align with human perception.
+The solutions in this section were more straightforward, though there were plenty of options; my choice reflects my personal perspective, even though I understand the scenarios where alternative implementations might be preferred. Regarding which ID to return when duplicates exist in the plan, I didn't reinvent the wheel; I chose the simplest implementation—returning the first ID that repeats an earlier one, scanning left to right. Comparing IDs was also a simple decision—an exact match—and I avoided normalization elsewhere to minimize the risk of overlooking potential edge cases. Comparing titles, however, was trickier; while I could have compared strings based on Unicode character codes, I ultimately opted for `localizedStandardCompare`. This type of sorting feels more natural to me; since the app is simple and this internal functionality is visible to the user, it is better for the behavior to align with human perception.
 
 ### Verification command/result
 
@@ -183,3 +183,52 @@ The solutions in this section were more straightforward, though there were plent
 
 - [artifacts/task3-red-duplicates.txt](artifacts/task3-red-duplicates.txt)
 - [artifacts/task3-swift-test.txt](artifacts/task3-swift-test.txt)
+
+---
+
+## Entry 5 — Task 4: queries and completion
+
+### Tool/agent task
+
+Asked the agent to explain the options for R-11 (`Int` overflow in
+`incompleteMinutes()`) in plain language, and then to implement task 4
+test-first according to R-11 (plain `+`, trap on overflow), with
+`markCompleted(id:)` throwing `.unknownID` for unknown IDs and being
+idempotent for already completed items.
+
+### Output reviewed
+
+- `Tests/StudyPlannerTests/StudyPlanQueriesAndCompletionTests.swift` — 11
+  tests: category query per category (fixture), category without items,
+  empty plan (all categories and zero minutes), incomplete-minute sum
+  (fixture, 135), zero when everything is completed, completion changes only
+  that item, unknown IDs (`"nope"`, `"A"`, `" a"`, `""`) throw and leave the
+  plan unchanged, unknown ID on an empty plan, idempotent completion,
+  completing an item already completed in the fixture, completion visible in
+  queries and encoded JSON.
+- `Sources/StudyPlanner/StudyPlanner.swift` — bodies of `incompleteMinutes()`
+  and `markCompleted(id:)`, plus an `internal mutating func markCompleted()`
+  on `StudyItem` (required because `isCompleted` is `private(set)`; not
+  visible outside the module).
+- Agent correction: it had described `Int.max` minutes as "billions of
+  years"; it is about 17.5 trillion years.
+- Final checks: exact `swift test` passes; public declarations compared with
+  the template commit `aca442f` are identical apart from the two
+  `public init(from:)` `Decodable` implementations;
+  `StudyPlannerPublicTests.swift` has no diff.
+
+### Accepted/rejected/revised decision
+
+Here, the solution was even more obvious; a simple option was chosen that covers the majority of use cases.
+
+### Verification command/result
+
+- Red: `swift test --filter StudyPlanQueriesAndCompletionTests` — crash at
+  `Implement completion mutation`.
+- Green: `swift test` — 47 tests, 0 failures, exit code 0 (7 validation,
+  14 Codable, 12 duplicates/ordering, 11 queries/completion, 3 starter).
+
+### Artifact links
+
+- [artifacts/task4-red.txt](artifacts/task4-red.txt)
+- [artifacts/swift-test-full.txt](artifacts/swift-test-full.txt)
