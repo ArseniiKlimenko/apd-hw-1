@@ -1,0 +1,95 @@
+# Task 3 — green run after duplicate-ID check and items(in:) ordering
+# Date: 2026-09-30
+# Command: swift test --filter 'StudyPlanDuplicatesAndOrderingTests|StudyPlanCodableTests|StudyItemValidationTests|StudyPlannerPublicTests/testValidItemStoresValues|StudyPlannerPublicTests/testBlankTitleIsRejected'
+# (filtered: testIncompleteMinutesAndCompletion still hits the markCompleted stub until task 4)
+
+Building for debugging...
+Build complete! (2.28s)
+Test Suite 'Selected tests' started at 2026-09-30 13:26:40.600.
+Test Suite 'StudyPlannerPackageTests.xctest' started at 2026-09-30 13:26:40.601.
+Test Suite 'StudyItemValidationTests' started at 2026-09-30 13:26:40.601.
+Test Case '-[StudyPlannerTests.StudyItemValidationTests testBlankTitleTakesPrecedenceOverNonPositiveMinutes]' started.
+Test Case '-[StudyPlannerTests.StudyItemValidationTests testBlankTitleTakesPrecedenceOverNonPositiveMinutes]' passed (0.002 seconds).
+Test Case '-[StudyPlannerTests.StudyItemValidationTests testEmptyIDIsAccepted]' started.
+Test Case '-[StudyPlannerTests.StudyItemValidationTests testEmptyIDIsAccepted]' passed (0.000 seconds).
+Test Case '-[StudyPlannerTests.StudyItemValidationTests testEmptyTitleThrowsBlankTitle]' started.
+Test Case '-[StudyPlannerTests.StudyItemValidationTests testEmptyTitleThrowsBlankTitle]' passed (0.000 seconds).
+Test Case '-[StudyPlannerTests.StudyItemValidationTests testNonPositiveMinutesThrow]' started.
+Test Case '-[StudyPlannerTests.StudyItemValidationTests testNonPositiveMinutesThrow]' passed (0.000 seconds).
+Test Case '-[StudyPlannerTests.StudyItemValidationTests testOneMinuteIsAccepted]' started.
+Test Case '-[StudyPlannerTests.StudyItemValidationTests testOneMinuteIsAccepted]' passed (0.000 seconds).
+Test Case '-[StudyPlannerTests.StudyItemValidationTests testValidItemStoresAllValuesAsGiven]' started.
+Test Case '-[StudyPlannerTests.StudyItemValidationTests testValidItemStoresAllValuesAsGiven]' passed (0.000 seconds).
+Test Case '-[StudyPlannerTests.StudyItemValidationTests testWhitespaceOnlyTitlesThrowBlankTitle]' started.
+Test Case '-[StudyPlannerTests.StudyItemValidationTests testWhitespaceOnlyTitlesThrowBlankTitle]' passed (0.000 seconds).
+Test Suite 'StudyItemValidationTests' passed at 2026-09-30 13:26:40.605.
+	 Executed 7 tests, with 0 failures (0 unexpected) in 0.002 (0.003) seconds
+Test Suite 'StudyPlanCodableTests' started at 2026-09-30 13:26:40.605.
+Test Case '-[StudyPlannerTests.StudyPlanCodableTests testDecodeFromEmptyArrayGivesEmptyPlan]' started.
+Test Case '-[StudyPlannerTests.StudyPlanCodableTests testDecodeFromEmptyArrayGivesEmptyPlan]' passed (0.000 seconds).
+Test Case '-[StudyPlannerTests.StudyPlanCodableTests testDecodeFromFixtureReadsAllItemsInFileOrder]' started.
+Test Case '-[StudyPlannerTests.StudyPlanCodableTests testDecodeFromFixtureReadsAllItemsInFileOrder]' passed (0.001 seconds).
+Test Case '-[StudyPlannerTests.StudyPlanCodableTests testDecodeFromPropagatesItemValidationError]' started.
+Test Case '-[StudyPlannerTests.StudyPlanCodableTests testDecodeFromPropagatesItemValidationError]' passed (0.000 seconds).
+Test Case '-[StudyPlannerTests.StudyPlanCodableTests testDecodeFromRejectsKeyedObject]' started.
+Test Case '-[StudyPlannerTests.StudyPlanCodableTests testDecodeFromRejectsKeyedObject]' passed (0.000 seconds).
+Test Case '-[StudyPlannerTests.StudyPlanCodableTests testDecodeFromRejectsMalformedJSON]' started.
+Test Case '-[StudyPlannerTests.StudyPlanCodableTests testDecodeFromRejectsMalformedJSON]' passed (0.001 seconds).
+Test Case '-[StudyPlannerTests.StudyPlanCodableTests testDecodingItemWithBlankTitleThrowsBlankTitle]' started.
+Test Case '-[StudyPlannerTests.StudyPlanCodableTests testDecodingItemWithBlankTitleThrowsBlankTitle]' passed (0.000 seconds).
+Test Case '-[StudyPlannerTests.StudyPlanCodableTests testDecodingItemWithMissingRequiredKeyThrowsKeyNotFound]' started.
+Test Case '-[StudyPlannerTests.StudyPlanCodableTests testDecodingItemWithMissingRequiredKeyThrowsKeyNotFound]' passed (0.000 seconds).
+Test Case '-[StudyPlannerTests.StudyPlanCodableTests testDecodingItemWithNonPositiveMinutesThrows]' started.
+Test Case '-[StudyPlannerTests.StudyPlanCodableTests testDecodingItemWithNonPositiveMinutesThrows]' passed (0.000 seconds).
+Test Case '-[StudyPlannerTests.StudyPlanCodableTests testDecodingItemWithoutIsCompletedDefaultsToFalse]' started.
+Test Case '-[StudyPlannerTests.StudyPlanCodableTests testDecodingItemWithoutIsCompletedDefaultsToFalse]' passed (0.000 seconds).
+Test Case '-[StudyPlannerTests.StudyPlanCodableTests testDecodingItemWithWrongValueTypesThrowsDecodingError]' started.
+Test Case '-[StudyPlannerTests.StudyPlanCodableTests testDecodingItemWithWrongValueTypesThrowsDecodingError]' passed (0.000 seconds).
+Test Case '-[StudyPlannerTests.StudyPlanCodableTests testItemRoundTripsThroughJSON]' started.
+Test Case '-[StudyPlannerTests.StudyPlanCodableTests testItemRoundTripsThroughJSON]' passed (0.000 seconds).
+Test Case '-[StudyPlannerTests.StudyPlanCodableTests testKeyedPlanDecodesItemsInOrder]' started.
+Test Case '-[StudyPlannerTests.StudyPlanCodableTests testKeyedPlanDecodesItemsInOrder]' passed (0.000 seconds).
+Test Case '-[StudyPlannerTests.StudyPlanCodableTests testKeyedPlanPropagatesItemValidationError]' started.
+Test Case '-[StudyPlannerTests.StudyPlanCodableTests testKeyedPlanPropagatesItemValidationError]' passed (0.000 seconds).
+Test Case '-[StudyPlannerTests.StudyPlanCodableTests testPlanRoundTripsThroughKeyedJSON]' started.
+Test Case '-[StudyPlannerTests.StudyPlanCodableTests testPlanRoundTripsThroughKeyedJSON]' passed (0.000 seconds).
+Test Suite 'StudyPlanCodableTests' passed at 2026-09-30 13:26:40.610.
+	 Executed 14 tests, with 0 failures (0 unexpected) in 0.004 (0.005) seconds
+Test Suite 'StudyPlanDuplicatesAndOrderingTests' started at 2026-09-30 13:26:40.610.
+Test Case '-[StudyPlannerTests.StudyPlanDuplicatesAndOrderingTests testCanonicallyEquivalentIDsAreDuplicates]' started.
+Test Case '-[StudyPlannerTests.StudyPlanDuplicatesAndOrderingTests testCanonicallyEquivalentIDsAreDuplicates]' passed (0.000 seconds).
+Test Case '-[StudyPlannerTests.StudyPlanDuplicatesAndOrderingTests testCategoryOrderDoesNotDependOnInsertionOrder]' started.
+Test Case '-[StudyPlannerTests.StudyPlanDuplicatesAndOrderingTests testCategoryOrderDoesNotDependOnInsertionOrder]' passed (0.000 seconds).
+Test Case '-[StudyPlannerTests.StudyPlanDuplicatesAndOrderingTests testDuplicateIDThrowsDuplicateID]' started.
+Test Case '-[StudyPlannerTests.StudyPlanDuplicatesAndOrderingTests testDuplicateIDThrowsDuplicateID]' passed (0.000 seconds).
+Test Case '-[StudyPlannerTests.StudyPlanDuplicatesAndOrderingTests testDuplicateInKeyedJSONThrowsDuplicateID]' started.
+Test Case '-[StudyPlannerTests.StudyPlanDuplicatesAndOrderingTests testDuplicateInKeyedJSONThrowsDuplicateID]' passed (0.000 seconds).
+Test Case '-[StudyPlannerTests.StudyPlanDuplicatesAndOrderingTests testDuplicateInTopLevelArrayThrowsDuplicateID]' started.
+Test Case '-[StudyPlannerTests.StudyPlanDuplicatesAndOrderingTests testDuplicateInTopLevelArrayThrowsDuplicateID]' passed (0.000 seconds).
+Test Case '-[StudyPlannerTests.StudyPlanDuplicatesAndOrderingTests testEqualTitlesAreOrderedByID]' started.
+Test Case '-[StudyPlannerTests.StudyPlanDuplicatesAndOrderingTests testEqualTitlesAreOrderedByID]' passed (0.000 seconds).
+Test Case '-[StudyPlannerTests.StudyPlanDuplicatesAndOrderingTests testFirstRepeatInDetectionOrderIsReported]' started.
+Test Case '-[StudyPlannerTests.StudyPlanDuplicatesAndOrderingTests testFirstRepeatInDetectionOrderIsReported]' passed (0.000 seconds).
+Test Case '-[StudyPlannerTests.StudyPlanDuplicatesAndOrderingTests testIDsDifferingInCaseOrWhitespaceAreNotDuplicates]' started.
+Test Case '-[StudyPlannerTests.StudyPlanDuplicatesAndOrderingTests testIDsDifferingInCaseOrWhitespaceAreNotDuplicates]' passed (0.000 seconds).
+Test Case '-[StudyPlannerTests.StudyPlanDuplicatesAndOrderingTests testItemsInCategoryAreOrderedByTitle]' started.
+Test Case '-[StudyPlannerTests.StudyPlanDuplicatesAndOrderingTests testItemsInCategoryAreOrderedByTitle]' passed (0.000 seconds).
+Test Case '-[StudyPlannerTests.StudyPlanDuplicatesAndOrderingTests testItemsKeepInsertionOrder]' started.
+Test Case '-[StudyPlannerTests.StudyPlanDuplicatesAndOrderingTests testItemsKeepInsertionOrder]' passed (0.000 seconds).
+Test Case '-[StudyPlannerTests.StudyPlanDuplicatesAndOrderingTests testTitleOrderingIgnoresCase]' started.
+Test Case '-[StudyPlannerTests.StudyPlanDuplicatesAndOrderingTests testTitleOrderingIgnoresCase]' passed (0.000 seconds).
+Test Case '-[StudyPlannerTests.StudyPlanDuplicatesAndOrderingTests testTitleOrderingIsNumericAware]' started.
+Test Case '-[StudyPlannerTests.StudyPlanDuplicatesAndOrderingTests testTitleOrderingIsNumericAware]' passed (0.000 seconds).
+Test Suite 'StudyPlanDuplicatesAndOrderingTests' passed at 2026-09-30 13:26:40.613.
+	 Executed 12 tests, with 0 failures (0 unexpected) in 0.002 (0.003) seconds
+Test Suite 'StudyPlannerPublicTests' started at 2026-09-30 13:26:40.613.
+Test Case '-[StudyPlannerTests.StudyPlannerPublicTests testBlankTitleIsRejected]' started.
+Test Case '-[StudyPlannerTests.StudyPlannerPublicTests testBlankTitleIsRejected]' passed (0.000 seconds).
+Test Case '-[StudyPlannerTests.StudyPlannerPublicTests testValidItemStoresValues]' started.
+Test Case '-[StudyPlannerTests.StudyPlannerPublicTests testValidItemStoresValues]' passed (0.000 seconds).
+Test Suite 'StudyPlannerPublicTests' passed at 2026-09-30 13:26:40.614.
+	 Executed 2 tests, with 0 failures (0 unexpected) in 0.000 (0.001) seconds
+Test Suite 'StudyPlannerPackageTests.xctest' passed at 2026-09-30 13:26:40.614.
+	 Executed 35 tests, with 0 failures (0 unexpected) in 0.009 (0.013) seconds
+Test Suite 'Selected tests' passed at 2026-09-30 13:26:40.614.
+	 Executed 35 tests, with 0 failures (0 unexpected) in 0.009 (0.014) seconds

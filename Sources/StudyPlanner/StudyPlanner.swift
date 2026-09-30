@@ -61,7 +61,9 @@ public struct StudyPlan: Codable, Equatable {
     public private(set) var items: [StudyItem]
 
     public init(items: [StudyItem]) throws {
-        // TODO(task 3): reject duplicate IDs.
+        if let duplicate = Self.firstDuplicateID(in: items) {
+            throw StudyPlanError.duplicateID(duplicate)
+        }
         self.items = items
     }
 
@@ -81,7 +83,9 @@ public struct StudyPlan: Codable, Equatable {
     }
 
     public func items(in category: StudyCategory) -> [StudyItem] {
-        fatalError("Implement category query")
+        items
+            .filter { $0.category == category }
+            .sorted(by: Self.isOrderedBefore)
     }
 
     public func incompleteMinutes() -> Int {
@@ -94,5 +98,23 @@ public struct StudyPlan: Codable, Equatable {
 
     public mutating func importMerging(_ importedItems: [StudyItem]) throws {
         fatalError("Implement optional bonus")
+    }
+
+    // First ID that repeats an earlier one, scanning left to right.
+    private static func firstDuplicateID(in items: [StudyItem]) -> String? {
+        var seen = Set<String>()
+        for item in items where !seen.insert(item.id).inserted {
+            return item.id
+        }
+        return nil
+    }
+
+    // Title via localizedStandardCompare, then ID; IDs are unique, so the order is total.
+    private static func isOrderedBefore(_ lhs: StudyItem, _ rhs: StudyItem) -> Bool {
+        switch lhs.title.localizedStandardCompare(rhs.title) {
+        case .orderedAscending: true
+        case .orderedDescending: false
+        case .orderedSame: lhs.id < rhs.id
+        }
     }
 }

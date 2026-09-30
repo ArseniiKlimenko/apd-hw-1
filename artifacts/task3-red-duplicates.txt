@@ -1,0 +1,36 @@
+# Task 3 — red run: StudyPlan.init(items:) stored items without a duplicate-ID check
+# Date: 2026-09-30
+# Command: swift test --filter 'StudyPlanDuplicatesAndOrderingTests/(testDuplicate|testFirstRepeat|testIDsDiffering|testCanonically)'
+# Ordering tests were not part of this run: items(in:) was still a fatalError stub ('Implement category query').
+
+Building for debugging...
+Build complete! (1.57s)
+Test Suite 'Selected tests' started at 2026-09-30 13:06:06.946.
+Test Suite 'StudyPlannerPackageTests.xctest' started at 2026-09-30 13:06:06.947.
+Test Suite 'StudyPlanDuplicatesAndOrderingTests' started at 2026-09-30 13:06:06.947.
+Test Case '-[StudyPlannerTests.StudyPlanDuplicatesAndOrderingTests testCanonicallyEquivalentIDsAreDuplicates]' started.
+Tests/StudyPlannerTests/StudyPlanDuplicatesAndOrderingTests.swift:39: error: -[StudyPlannerTests.StudyPlanDuplicatesAndOrderingTests testCanonicallyEquivalentIDsAreDuplicates] : XCTAssertThrowsError failed: did not throw an error
+Test Case '-[StudyPlannerTests.StudyPlanDuplicatesAndOrderingTests testCanonicallyEquivalentIDsAreDuplicates]' failed (0.107 seconds).
+Test Case '-[StudyPlannerTests.StudyPlanDuplicatesAndOrderingTests testDuplicateIDThrowsDuplicateID]' started.
+Tests/StudyPlannerTests/StudyPlanDuplicatesAndOrderingTests.swift:10: error: -[StudyPlannerTests.StudyPlanDuplicatesAndOrderingTests testDuplicateIDThrowsDuplicateID] : XCTAssertThrowsError failed: did not throw an error
+Test Case '-[StudyPlannerTests.StudyPlanDuplicatesAndOrderingTests testDuplicateIDThrowsDuplicateID]' failed (0.001 seconds).
+Test Case '-[StudyPlannerTests.StudyPlanDuplicatesAndOrderingTests testDuplicateInKeyedJSONThrowsDuplicateID]' started.
+Tests/StudyPlannerTests/StudyPlanDuplicatesAndOrderingTests.swift:51: error: -[StudyPlannerTests.StudyPlanDuplicatesAndOrderingTests testDuplicateInKeyedJSONThrowsDuplicateID] : XCTAssertThrowsError failed: did not throw an error
+Test Case '-[StudyPlannerTests.StudyPlanDuplicatesAndOrderingTests testDuplicateInKeyedJSONThrowsDuplicateID]' failed (0.001 seconds).
+Test Case '-[StudyPlannerTests.StudyPlanDuplicatesAndOrderingTests testDuplicateInTopLevelArrayThrowsDuplicateID]' started.
+Tests/StudyPlannerTests/StudyPlanDuplicatesAndOrderingTests.swift:64: error: -[StudyPlannerTests.StudyPlanDuplicatesAndOrderingTests testDuplicateInTopLevelArrayThrowsDuplicateID] : XCTAssertThrowsError failed: did not throw an error
+Test Case '-[StudyPlannerTests.StudyPlanDuplicatesAndOrderingTests testDuplicateInTopLevelArrayThrowsDuplicateID]' failed (0.001 seconds).
+Test Case '-[StudyPlannerTests.StudyPlanDuplicatesAndOrderingTests testFirstRepeatInDetectionOrderIsReported]' started.
+Tests/StudyPlannerTests/StudyPlanDuplicatesAndOrderingTests.swift:23: error: -[StudyPlannerTests.StudyPlanDuplicatesAndOrderingTests testFirstRepeatInDetectionOrderIsReported] : XCTAssertThrowsError failed: did not throw an error - ids: ["a", "b", "b", "a"]
+Tests/StudyPlannerTests/StudyPlanDuplicatesAndOrderingTests.swift:23: error: -[StudyPlannerTests.StudyPlanDuplicatesAndOrderingTests testFirstRepeatInDetectionOrderIsReported] : XCTAssertThrowsError failed: did not throw an error - ids: ["b", "a", "a", "b"]
+Tests/StudyPlannerTests/StudyPlanDuplicatesAndOrderingTests.swift:23: error: -[StudyPlannerTests.StudyPlanDuplicatesAndOrderingTests testFirstRepeatInDetectionOrderIsReported] : XCTAssertThrowsError failed: did not throw an error - ids: ["c", "a", "c", "a"]
+Tests/StudyPlannerTests/StudyPlanDuplicatesAndOrderingTests.swift:23: error: -[StudyPlannerTests.StudyPlanDuplicatesAndOrderingTests testFirstRepeatInDetectionOrderIsReported] : XCTAssertThrowsError failed: did not throw an error - ids: ["x", "y", "z", "z", "z"]
+Test Case '-[StudyPlannerTests.StudyPlanDuplicatesAndOrderingTests testFirstRepeatInDetectionOrderIsReported]' failed (0.001 seconds).
+Test Case '-[StudyPlannerTests.StudyPlanDuplicatesAndOrderingTests testIDsDifferingInCaseOrWhitespaceAreNotDuplicates]' started.
+Test Case '-[StudyPlannerTests.StudyPlanDuplicatesAndOrderingTests testIDsDifferingInCaseOrWhitespaceAreNotDuplicates]' passed (0.000 seconds).
+Test Suite 'StudyPlanDuplicatesAndOrderingTests' failed at 2026-09-30 13:06:07.058.
+	 Executed 6 tests, with 8 failures (0 unexpected) in 0.110 (0.111) seconds
+Test Suite 'StudyPlannerPackageTests.xctest' failed at 2026-09-30 13:06:07.058.
+	 Executed 6 tests, with 8 failures (0 unexpected) in 0.110 (0.111) seconds
+Test Suite 'Selected tests' failed at 2026-09-30 13:06:07.058.
+	 Executed 6 tests, with 8 failures (0 unexpected) in 0.110 (0.113) seconds

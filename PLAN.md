@@ -26,7 +26,12 @@ files, one `XCTestCase` subclass per task.
 | R-5 | Error type for domain violations found while decoding? | Propagate `StudyPlanError` unchanged; structural problems stay `DecodingError`. | Same rule gives the same error from `init` and from JSON; tests can compare exact `StudyPlanError` values. |
 | R-6 | Which formats does `StudyPlan.decode(from:)` accept? | Top-level JSON array only. The keyed `{"items": [...]}` format is read by `JSONDecoder().decode(StudyPlan.self, from:)`. | Matches the task wording and the fixture; one method, one format. |
 
-Decisions for tasks 3–4 (R-7 … R-11) are recorded before each task starts.
+| R-7 | Which ID is reported when several IDs are duplicated? | The first repeat in detection order: scan left to right and report the first ID already seen (`[a, b, b, a]` → `"b"`). | Most common reading of "first duplicate"; single pass with early exit; reusable for the bonus. |
+| R-8 | How are IDs compared? | Swift `String` equality, no normalization: `"A"`, `"a"` and `" a"` are different IDs. | Consistent with R-3 (IDs are not normalized). Swift equality is Unicode canonical equivalence, so `"\u{E9}"` and `"e\u{301}"` count as the same ID. |
+| R-9 | Where does title-then-ID ordering apply? | Only to `items(in:)`; `items` keeps insertion order. | The bonus requires replacing items "at their current positions" and appending new IDs in ID order, which only makes sense if `items` is not re-sorted. Keeps JSON order on decode. |
+| R-10 | How are titles compared? | `localizedStandardCompare` (case-insensitive, numeric-aware, locale-aware, e.g. `"Item 2"` before `"Item 10"`). Ties (`.orderedSame`) are broken by `id` using `<`. | Student's choice: human-friendly order, including the Ukrainian alphabet. The agent recommended `<` for strict determinism; the locale risk is accepted and recorded under Risks. |
+
+Decision for task 4 (R-11) is recorded before the task starts.
 
 ## Acceptance criteria
 
@@ -59,7 +64,22 @@ Decisions for tasks 3–4 (R-7 … R-11) are recorded before each task starts.
 - Duplicate-ID rejection during decoding is covered in task 3, because it
   depends on R-7.
 
-### Tasks 3–4 and bonus
+### Task 3 — Duplicates and ordering
+
+- `StudyPlan(items:)` throws `.duplicateID(id)` for the first repeat in
+  detection order (R-7): `[a, b, a]` → `"a"`, `[a, b, b, a]` → `"b"`,
+  `[c, a, c, a]` → `"c"`.
+- IDs differing only in case or whitespace are not duplicates (R-8).
+- Duplicates are rejected through both JSON entry points (keyed decoding and
+  `decode(from:)`).
+- `items` keeps insertion order (R-9).
+- `items(in:)` returns the category's items ordered by title using
+  `localizedStandardCompare`, then by `id` (R-10): case-insensitive
+  (`"Apple"`, `"banana"`, `"Cherry"`) and numeric-aware (`"Item 2"` before
+  `"Item 10"`); equal titles are ordered by `id`; the result does not depend
+  on insertion order.
+
+### Task 4 and bonus
 
 To be detailed before each task starts.
 
@@ -70,7 +90,10 @@ To be detailed before each task starts.
 2. Task 2 — tests in `Tests/StudyPlannerTests/StudyPlanCodableTests.swift`,
    then `StudyItem.init(from:)`, `StudyPlan.init(from:)`,
    `StudyPlan.decode(from:)`, and a storing-only `StudyPlan.init(items:)`.
-3. Task 3 — duplicate IDs in `StudyPlan.init(items:)` and title-then-ID ordering.
+3. Task 3 — tests in
+   `Tests/StudyPlannerTests/StudyPlanDuplicatesAndOrderingTests.swift`, then
+   the duplicate-ID check in `StudyPlan.init(items:)` and `items(in:)`
+   (filter + title-then-ID ordering) with private helpers.
 4. Task 4 — `items(in:)`, `incompleteMinutes()`, `markCompleted(id:)`.
 5. Optional bonus — `importMerging(_:)`.
 
@@ -95,7 +118,20 @@ To be detailed before each task starts.
   decoding") makes this unlikely. A wrong format yields a generic
   `DecodingError.typeMismatch`.
 - Until task 3, `StudyPlan.init(items:)` stores items without the duplicate-ID
-  check.
+  check. (Resolved in task 3.)
+- R-7: the reported ID depends on input order (`[a, b, b, a]` → `"b"`,
+  `[b, a, a, b]` → `"a"`); this is intentional and covered by a test.
+- R-8: canonically equivalent IDs (`"\u{E9}"` vs `"e\u{301}"`) are treated as
+  duplicates although their bytes differ.
+- R-10: `localizedStandardCompare` uses the current locale, and Apple
+  documents that its exact behavior differs between locales and may change in
+  future OS releases. On the grader's machine the order can differ from the
+  local one: e.g. Latin vs Cyrillic titles swap places between `en_US` and
+  `uk_UA`, and some locales put uppercase before lowercase. Mitigation: the
+  student tests use only titles whose relative order is the same in every
+  locale (plain Latin letters with different first letters, and numeric
+  suffixes); a hidden test expecting plain `<` ordering (e.g. `"B"` before
+  `"a"`) would fail.
 
 ## `swift test` verification
 
@@ -108,3 +144,6 @@ To be detailed before each task starts.
 | 2026-09-29 | `swift test --filter 'StudyPlanCodableTests/(testDecodingItem\|testItemRoundTrips)'` (synthesized decoder) | 6 tests, 3 failures: blank title and zero minutes decode without error; missing `isCompleted` throws `keyNotFound` ([log](artifacts/task2-red-synthesized-decoder.txt)) | Red phase confirmed the validation bypass; implement explicit `init(from:)`. |
 | 2026-09-29 | `swift test --filter 'StudyPlanCodableTests\|StudyItemValidationTests\|StudyPlannerPublicTests/testValidItemStoresValues\|StudyPlannerPublicTests/testBlankTitleIsRejected'` | 23 tests, 0 failures ([log](artifacts/task2-swift-test.txt)) | Task 2 done. |
 | 2026-09-29 | `swift test` | Crash at `Implement completion mutation` in `testIncompleteMinutesAndCompletion` | Expected until task 4. |
+| 2026-09-30 | `swift test --filter 'StudyPlanDuplicatesAndOrderingTests/(testDuplicate\|testFirstRepeat\|testIDsDiffering\|testCanonically)'` (no duplicate check yet) | 6 tests, 8 assertion failures (`did not throw`) ([log](artifacts/task3-red-duplicates.txt)); ordering tests crash at `Implement category query` | Red phase confirmed; implement duplicate check and `items(in:)`. |
+| 2026-09-30 | `swift test --filter 'StudyPlanDuplicatesAndOrderingTests\|StudyPlanCodableTests\|StudyItemValidationTests\|StudyPlannerPublicTests/testValidItemStoresValues\|StudyPlannerPublicTests/testBlankTitleIsRejected'` | 35 tests, 0 failures ([log](artifacts/task3-swift-test.txt)) | Task 3 done. |
+| 2026-09-30 | `swift test` | Crash at `Implement completion mutation` | Expected until task 4. |

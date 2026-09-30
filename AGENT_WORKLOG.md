@@ -130,3 +130,56 @@ I accepted the AI's suggestions regarding key parts of this component, but only 
 
 - [artifacts/task2-red-synthesized-decoder.txt](artifacts/task2-red-synthesized-decoder.txt)
 - [artifacts/task2-swift-test.txt](artifacts/task2-swift-test.txt)
+
+---
+
+## Entry 4 — Task 3: duplicates and ordering
+
+### Tool/agent task
+
+Asked the agent to list and compare all options for R-7 (which duplicate ID
+to report), to explain R-9 (where ordering applies) and R-10 (how titles are
+compared) in detail, and then to implement task 3 test-first according to
+R-7 A (first repeat in detection order), R-8 (plain Swift `String` equality
+for IDs), R-9 (`items` keeps insertion order; only `items(in:)` is sorted)
+and R-10 (`localizedStandardCompare` for titles). I stopped the agent before
+accepting the private helpers and asked for a plain-language explanation of
+`firstDuplicateID` and `isOrderedBefore`, then accepted the same change.
+
+### Output reviewed
+
+- `Tests/StudyPlannerTests/StudyPlanDuplicatesAndOrderingTests.swift` — 12
+  tests: duplicate ID, first repeat in detection order (`[a,b,b,a]` → `b`,
+  `[b,a,a,b]` → `a`, `[c,a,c,a]` → `c`, triple repeat), case/whitespace IDs
+  are distinct, canonically equivalent IDs are duplicates, duplicates via
+  keyed JSON and via `decode(from:)`, `items` insertion order, title order,
+  equal titles ordered by ID, case-insensitive and numeric-aware titles,
+  order independent of input permutation.
+- `Sources/StudyPlanner/StudyPlanner.swift` — duplicate check in
+  `StudyPlan.init(items:)`, body of `items(in:)` (filter + sort), and two
+  `private static` helpers: `firstDuplicateID(in:)` and `isOrderedBefore`.
+- R-10 differs from the agent's recommendation (`<`, strictly deterministic).
+  The agent documented the locale risk in `PLAN.md` and checked with a local
+  script that the titles used in the tests sort identically under the
+  `localizedStandardCompare` options in en_US, uk_UA, da_DK, de_DE, tr_TR,
+  ja_JP and sv_SE.
+
+### Accepted/rejected/revised decision
+
+The solutions in this section were more straightforward, though there were plenty of options; my choice reflects my personal perspective, even though I understand the scenarios where alternative implementations might be preferred. Regarding which ID to return when duplicates exist in the plan, I didn't reinvent the wheel; I chose the simplest implementation—returning the ID of the first occurrence. Comparing IDs was also a simple decision—an exact match—and I avoided normalization elsewhere to minimize the risk of overlooking potential edge cases. Comparing titles, however, was trickier; while I could have compared strings based on Unicode character codes, I ultimately opted for `localizedStandardCompare`. This type of sorting feels more natural to me; since the app is simple and this internal functionality is visible to the user, it is better for the behavior to align with human perception.
+
+### Verification command/result
+
+- Red: `swift test --filter 'StudyPlanDuplicatesAndOrderingTests/(testDuplicate|testFirstRepeat|testIDsDiffering|testCanonically)'`
+  — 6 tests, 8 assertion failures (`did not throw`); the negative
+  case/whitespace test already passed. Ordering tests crashed at
+  `Implement category query`.
+- Green: `swift test --filter 'StudyPlanDuplicatesAndOrderingTests|StudyPlanCodableTests|StudyItemValidationTests|StudyPlannerPublicTests/testValidItemStoresValues|StudyPlannerPublicTests/testBlankTitleIsRejected'`
+  — 35 tests, 0 failures.
+- Full `swift test` still crashes at `Implement completion mutation`
+  (expected until task 4).
+
+### Artifact links
+
+- [artifacts/task3-red-duplicates.txt](artifacts/task3-red-duplicates.txt)
+- [artifacts/task3-swift-test.txt](artifacts/task3-swift-test.txt)
