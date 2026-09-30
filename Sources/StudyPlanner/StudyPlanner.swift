@@ -109,7 +109,24 @@ public struct StudyPlan: Codable, Equatable {
     }
 
     public mutating func importMerging(_ importedItems: [StudyItem]) throws {
-        fatalError("Implement optional bonus")
+        if let duplicate = Self.firstDuplicateID(in: importedItems) {
+            throw StudyPlanError.duplicateID(duplicate)
+        }
+
+        var merged = items
+        let indexByID = Dictionary(uniqueKeysWithValues: items.enumerated().map { ($1.id, $0) })
+        var newItems: [StudyItem] = []
+        for item in importedItems {
+            if let index = indexByID[item.id] {
+                merged[index] = item
+            } else {
+                newItems.append(item)
+            }
+        }
+        merged += newItems.sorted(by: Self.isIDOrderedBefore)
+
+        // Single assignment at the end keeps the import atomic; the initializer re-checks uniqueness.
+        self = try StudyPlan(items: merged)
     }
 
     // First ID that repeats an earlier one, scanning left to right.
@@ -124,6 +141,15 @@ public struct StudyPlan: Codable, Equatable {
     // Title via localizedStandardCompare, then ID; IDs are unique, so the order is total.
     private static func isOrderedBefore(_ lhs: StudyItem, _ rhs: StudyItem) -> Bool {
         switch lhs.title.localizedStandardCompare(rhs.title) {
+        case .orderedAscending: true
+        case .orderedDescending: false
+        case .orderedSame: lhs.id < rhs.id
+        }
+    }
+
+    // New IDs in importMerging: localizedStandardCompare, then < so the order stays total.
+    private static func isIDOrderedBefore(_ lhs: StudyItem, _ rhs: StudyItem) -> Bool {
+        switch lhs.id.localizedStandardCompare(rhs.id) {
         case .orderedAscending: true
         case .orderedDescending: false
         case .orderedSame: lhs.id < rhs.id

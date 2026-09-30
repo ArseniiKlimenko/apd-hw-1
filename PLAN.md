@@ -32,6 +32,11 @@ files, one `XCTestCase` subclass per task.
 | R-10 | How are titles compared? | `localizedStandardCompare` (case-insensitive, numeric-aware, locale-aware, e.g. `"Item 2"` before `"Item 10"`). Ties (`.orderedSame`) are broken by `id` using `<`. | Student's choice: human-friendly order, including the Ukrainian alphabet. The agent recommended `<` for strict determinism; the locale risk is accepted and recorded under Risks. |
 
 | R-11 | What if `incompleteMinutes()` overflows `Int`? | Plain `+`: Swift traps on overflow. | Never returns a wrong number; standard Swift behavior; no rule beyond the task. `&+` would silently return a negative sum, saturation would hide the problem, and throwing or returning an optional would change the public API. |
+| R-12 | Bonus: what does "replace" mean for an existing ID? | Full replacement: the imported item (including its `isCompleted`) takes the existing item's position. | Literal reading of "replace"; `items[i] == imported`; no extra rule. |
+| R-13 | Bonus: how are new IDs ordered? | `localizedStandardCompare` on `id` (e.g. `"item-2"` before `"item-10"`, case-insensitive); `.orderedSame` falls back to `<`. | Student's choice, consistent with R-10. The agent recommended `<`; the locale risk is recorded under Risks. |
+| R-14 | Bonus: how is atomicity guaranteed? | Check incoming duplicates first, build the result in a local copy, then assign `self = try StudyPlan(items: merged)` once at the end. | Any failure before the last line leaves the plan untouched by construction; the initializer re-checks ID uniqueness. |
+| R-15 | Bonus: which incoming duplicates are rejected? | Any repeated ID inside `importedItems`, even with identical content; the first repeat in detection order is reported (as R-7). An imported ID that already exists in the plan is a replacement, not a duplicate. | "Reject duplicate incoming IDs" is about IDs, not content; same helper and semantics as `init`. |
+| R-16 | Bonus: empty import? | No change, no error. | Nothing to merge; throwing would need a new error case (API change). |
 
 ## Acceptance criteria
 
@@ -95,9 +100,19 @@ files, one `XCTestCase` subclass per task.
 - Completion is visible in `items(in:)`, `incompleteMinutes()` and in encoded
   JSON.
 
-### Bonus
+### Bonus — `importMerging(_:)`
 
-To be detailed if attempted.
+- Existing IDs are replaced at their current positions, in full (R-12);
+  positions come from the plan, not from the import order.
+- New IDs are appended after all existing items, ordered with
+  `localizedStandardCompare` (R-13): `[c✓, a, e]` + `[d, a′, b]` →
+  `[c✓, a′, e, b, d]`.
+- Duplicate incoming IDs (even identical items) throw `.duplicateID` for the
+  first repeat in detection order (R-15), and the plan is unchanged — also
+  when the same import would otherwise have replaced existing items (R-14).
+- An empty import changes nothing and does not throw (R-16).
+- The merged plan keeps working with `items(in:)`, `incompleteMinutes()` and
+  `markCompleted(id:)`.
 
 ## Implementation steps
 
@@ -115,7 +130,10 @@ To be detailed if attempted.
    `incompleteMinutes()`, `markCompleted(id:)` and an `internal` completion
    helper on `StudyItem` (needed because `isCompleted` is `private(set)`).
    `items(in:)` was implemented in task 3.
-5. Optional bonus — `importMerging(_:)`.
+5. Optional bonus — tests in
+   `Tests/StudyPlannerTests/StudyPlanImportMergingTests.swift`, then
+   `importMerging(_:)` reusing `firstDuplicateID(in:)`, with an `id → index`
+   dictionary and a private new-ID ordering helper.
 
 ## Risks
 
@@ -157,6 +175,12 @@ To be detailed if attempted.
   overflow. `Int.max` minutes is about 17.5 trillion years, so this is
   accepted; a trap cannot be caught by XCTest, so it is documented rather
   than tested.
+- R-12: a full replacement can reset progress (an imported item with
+  `isCompleted: false` replaces a completed one).
+- R-13: new-ID order has the same locale dependence as R-10. A hidden test
+  expecting plain `<` order for new IDs (e.g. `"B"` before `"a"`, or
+  `"item-10"` before `"item-2"`) would fail. Student tests use only IDs whose
+  relative order is the same in every checked locale.
 
 ## `swift test` verification
 
@@ -174,3 +198,5 @@ To be detailed if attempted.
 | 2026-09-30 | `swift test` | Crash at `Implement completion mutation` | Expected until task 4. |
 | 2026-09-30 | `swift test --filter StudyPlanQueriesAndCompletionTests` (stubs unchanged) | Crash at `Implement completion mutation` ([log](artifacts/task4-red.txt)) | Red phase confirmed; implement `incompleteMinutes()` and `markCompleted(id:)`. |
 | 2026-09-30 | `swift test` | **47 tests, 0 failures, exit code 0** ([log](artifacts/swift-test-full.txt)) | Tasks 1–4 done. Public declarations checked against the template (`git show aca442f:…`): identical apart from the two `public init(from:)` `Decodable` implementations; `StudyPlannerPublicTests.swift` unchanged. |
+| 2026-09-30 | `swift test --filter StudyPlanImportMergingTests` (stub unchanged) | Crash at `Implement optional bonus` ([log](artifacts/bonus-red.txt)) | Red phase confirmed; implement `importMerging(_:)`. |
+| 2026-09-30 | `swift test` | **58 tests, 0 failures, exit code 0** ([log](artifacts/swift-test-final.txt)) | Bonus done. Public declarations re-checked against `aca442f` (identical apart from the two `public init(from:)`); starter tests and fixture unchanged; no `fatalError` stubs left. |

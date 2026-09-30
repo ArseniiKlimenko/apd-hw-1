@@ -232,3 +232,55 @@ Here, the solution was even more obvious; a simple option was chosen that covers
 
 - [artifacts/task4-red.txt](artifacts/task4-red.txt)
 - [artifacts/swift-test-full.txt](artifacts/swift-test-full.txt)
+
+---
+
+## Entry 6 — Bonus: `importMerging(_:)`
+
+### Tool/agent task
+
+Asked the agent to list the open decisions for the bonus with options, and
+then to implement it test-first according to R-12 A (full replacement,
+including `isCompleted`), R-13 B (new IDs ordered with
+`localizedStandardCompare`), R-14 B (local copy, single assignment at the
+end), R-15 (reject any repeated incoming ID, first repeat in detection
+order) and R-16 (empty import is a no-op).
+
+### Output reviewed
+
+- `Tests/StudyPlannerTests/StudyPlanImportMergingTests.swift` — 11 tests:
+  replace in place + append new in ID order (`[c✓, a, e]` + `[d, a′, b]` →
+  `[c✓, a′, e, b, d]`), full replacement including completion, positions from
+  the plan not the import, numeric and case-insensitive new-ID order, import
+  into an empty plan, empty import, duplicate incoming IDs (first repeat
+  reported, plan unchanged), identical duplicates rejected, failed import
+  applies neither replacements nor appends, existing ID is a replacement not
+  a duplicate, merged plan works with queries and completion.
+- `Sources/StudyPlanner/StudyPlanner.swift` — body of `importMerging(_:)`
+  (reuses `firstDuplicateID(in:)`, `id → index` dictionary, sorted new items,
+  `self = try StudyPlan(items: merged)` as the only mutation) and a private
+  `isIDOrderedBefore` helper with a `<` fallback for `.orderedSame`.
+- R-13 differs from the agent's recommendation (`<`). The agent recorded the
+  locale risk in `PLAN.md` and checked with a local script that the IDs used
+  in the tests sort identically in en_US, uk_UA, da_DK, de_DE, tr_TR, ja_JP
+  and sv_SE.
+- Final checks: public declarations identical to the template apart from the
+  two `public init(from:)`; starter tests and fixture unchanged; no
+  `fatalError` stubs left.
+
+### Accepted/rejected/revised decision
+
+The bonus task is indeed more complex to implement than the other parts; however, I thoroughly analyzed all architectural options and their implementations, which helped me complete the task with a solid understanding. Additionally, two earlier decisions carried over to `importMerging` unchanged. R-9 (where items retain insertion order, and title-then-ID sorting applies only to `items(in:)`) ensures stable "current positions" in the plan, allowing existing items to be replaced in place and new ones appended at the end without violating the sorting invariant. R-7 A (identifying the first occurrence based on detection order) was implemented via a dedicated helper function, `firstDuplicateID`; this helper is reused without modification for incoming duplicates, ensuring consistent duplicate reporting across both initialization and `importMerging`.
+
+### Verification command/result
+
+- Red: `swift test --filter StudyPlanImportMergingTests` — crash at
+  `Implement optional bonus`.
+- Green: `swift test` — 58 tests, 0 failures, exit code 0 (7 validation,
+  14 Codable, 12 duplicates/ordering, 11 queries/completion, 11 import
+  merging, 3 starter).
+
+### Artifact links
+
+- [artifacts/bonus-red.txt](artifacts/bonus-red.txt)
+- [artifacts/swift-test-final.txt](artifacts/swift-test-final.txt)

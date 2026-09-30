@@ -1,0 +1,12 @@
+# Bonus — red run: importMerging was a fatalError stub
+# Date: 2026-09-30
+# Command: swift test --filter StudyPlanImportMergingTests
+
+Building for debugging...
+Build complete! (1.85s)
+error: Exited with unexpected signal code 5
+Test Suite 'Selected tests' started at 2026-09-30 14:44:03.082.
+Test Suite 'StudyPlannerPackageTests.xctest' started at 2026-09-30 14:44:03.083.
+Test Suite 'StudyPlanImportMergingTests' started at 2026-09-30 14:44:03.083.
+Test Case '-[StudyPlannerTests.StudyPlanImportMergingTests testDuplicateIncomingIDsThrowFirstRepeatAndLeavePlanUnchanged]' started.
+StudyPlanner/StudyPlanner.swift:112: Fatal error: Implement optional bonus

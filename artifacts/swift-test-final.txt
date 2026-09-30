@@ -1,0 +1,151 @@
+# Tasks 1–4 + bonus — complete suite
+# Date: 2026-09-30
+# Command: swift test
+# Result: 58 tests, 0 failures, exit code 0
+
+Building for debugging...
+Build complete! (2.10s)
+Test Suite 'All tests' started at 2026-09-30 14:59:29.119.
+Test Suite 'StudyPlannerPackageTests.xctest' started at 2026-09-30 14:59:29.120.
+Test Suite 'StudyItemValidationTests' started at 2026-09-30 14:59:29.120.
+Test Case '-[StudyPlannerTests.StudyItemValidationTests testBlankTitleTakesPrecedenceOverNonPositiveMinutes]' started.
+Test Case '-[StudyPlannerTests.StudyItemValidationTests testBlankTitleTakesPrecedenceOverNonPositiveMinutes]' passed (0.003 seconds).
+Test Case '-[StudyPlannerTests.StudyItemValidationTests testEmptyIDIsAccepted]' started.
+Test Case '-[StudyPlannerTests.StudyItemValidationTests testEmptyIDIsAccepted]' passed (0.000 seconds).
+Test Case '-[StudyPlannerTests.StudyItemValidationTests testEmptyTitleThrowsBlankTitle]' started.
+Test Case '-[StudyPlannerTests.StudyItemValidationTests testEmptyTitleThrowsBlankTitle]' passed (0.000 seconds).
+Test Case '-[StudyPlannerTests.StudyItemValidationTests testNonPositiveMinutesThrow]' started.
+Test Case '-[StudyPlannerTests.StudyItemValidationTests testNonPositiveMinutesThrow]' passed (0.000 seconds).
+Test Case '-[StudyPlannerTests.StudyItemValidationTests testOneMinuteIsAccepted]' started.
+Test Case '-[StudyPlannerTests.StudyItemValidationTests testOneMinuteIsAccepted]' passed (0.000 seconds).
+Test Case '-[StudyPlannerTests.StudyItemValidationTests testValidItemStoresAllValuesAsGiven]' started.
+Test Case '-[StudyPlannerTests.StudyItemValidationTests testValidItemStoresAllValuesAsGiven]' passed (0.000 seconds).
+Test Case '-[StudyPlannerTests.StudyItemValidationTests testWhitespaceOnlyTitlesThrowBlankTitle]' started.
+Test Case '-[StudyPlannerTests.StudyItemValidationTests testWhitespaceOnlyTitlesThrowBlankTitle]' passed (0.000 seconds).
+Test Suite 'StudyItemValidationTests' passed at 2026-09-30 14:59:29.125.
+	 Executed 7 tests, with 0 failures (0 unexpected) in 0.004 (0.005) seconds
+Test Suite 'StudyPlanCodableTests' started at 2026-09-30 14:59:29.125.
+Test Case '-[StudyPlannerTests.StudyPlanCodableTests testDecodeFromEmptyArrayGivesEmptyPlan]' started.
+Test Case '-[StudyPlannerTests.StudyPlanCodableTests testDecodeFromEmptyArrayGivesEmptyPlan]' passed (0.000 seconds).
+Test Case '-[StudyPlannerTests.StudyPlanCodableTests testDecodeFromFixtureReadsAllItemsInFileOrder]' started.
+Test Case '-[StudyPlannerTests.StudyPlanCodableTests testDecodeFromFixtureReadsAllItemsInFileOrder]' passed (0.001 seconds).
+Test Case '-[StudyPlannerTests.StudyPlanCodableTests testDecodeFromPropagatesItemValidationError]' started.
+Test Case '-[StudyPlannerTests.StudyPlanCodableTests testDecodeFromPropagatesItemValidationError]' passed (0.000 seconds).
+Test Case '-[StudyPlannerTests.StudyPlanCodableTests testDecodeFromRejectsKeyedObject]' started.
+Test Case '-[StudyPlannerTests.StudyPlanCodableTests testDecodeFromRejectsKeyedObject]' passed (0.000 seconds).
+Test Case '-[StudyPlannerTests.StudyPlanCodableTests testDecodeFromRejectsMalformedJSON]' started.
+Test Case '-[StudyPlannerTests.StudyPlanCodableTests testDecodeFromRejectsMalformedJSON]' passed (0.001 seconds).
+Test Case '-[StudyPlannerTests.StudyPlanCodableTests testDecodingItemWithBlankTitleThrowsBlankTitle]' started.
+Test Case '-[StudyPlannerTests.StudyPlanCodableTests testDecodingItemWithBlankTitleThrowsBlankTitle]' passed (0.000 seconds).
+Test Case '-[StudyPlannerTests.StudyPlanCodableTests testDecodingItemWithMissingRequiredKeyThrowsKeyNotFound]' started.
+Test Case '-[StudyPlannerTests.StudyPlanCodableTests testDecodingItemWithMissingRequiredKeyThrowsKeyNotFound]' passed (0.000 seconds).
+Test Case '-[StudyPlannerTests.StudyPlanCodableTests testDecodingItemWithNonPositiveMinutesThrows]' started.
+Test Case '-[StudyPlannerTests.StudyPlanCodableTests testDecodingItemWithNonPositiveMinutesThrows]' passed (0.000 seconds).
+Test Case '-[StudyPlannerTests.StudyPlanCodableTests testDecodingItemWithoutIsCompletedDefaultsToFalse]' started.
+Test Case '-[StudyPlannerTests.StudyPlanCodableTests testDecodingItemWithoutIsCompletedDefaultsToFalse]' passed (0.000 seconds).
+Test Case '-[StudyPlannerTests.StudyPlanCodableTests testDecodingItemWithWrongValueTypesThrowsDecodingError]' started.
+Test Case '-[StudyPlannerTests.StudyPlanCodableTests testDecodingItemWithWrongValueTypesThrowsDecodingError]' passed (0.000 seconds).
+Test Case '-[StudyPlannerTests.StudyPlanCodableTests testItemRoundTripsThroughJSON]' started.
+Test Case '-[StudyPlannerTests.StudyPlanCodableTests testItemRoundTripsThroughJSON]' passed (0.000 seconds).
+Test Case '-[StudyPlannerTests.StudyPlanCodableTests testKeyedPlanDecodesItemsInOrder]' started.
+Test Case '-[StudyPlannerTests.StudyPlanCodableTests testKeyedPlanDecodesItemsInOrder]' passed (0.000 seconds).
+Test Case '-[StudyPlannerTests.StudyPlanCodableTests testKeyedPlanPropagatesItemValidationError]' started.
+Test Case '-[StudyPlannerTests.StudyPlanCodableTests testKeyedPlanPropagatesItemValidationError]' passed (0.000 seconds).
+Test Case '-[StudyPlannerTests.StudyPlanCodableTests testPlanRoundTripsThroughKeyedJSON]' started.
+Test Case '-[StudyPlannerTests.StudyPlanCodableTests testPlanRoundTripsThroughKeyedJSON]' passed (0.000 seconds).
+Test Suite 'StudyPlanCodableTests' passed at 2026-09-30 14:59:29.131.
+	 Executed 14 tests, with 0 failures (0 unexpected) in 0.004 (0.006) seconds
+Test Suite 'StudyPlanDuplicatesAndOrderingTests' started at 2026-09-30 14:59:29.131.
+Test Case '-[StudyPlannerTests.StudyPlanDuplicatesAndOrderingTests testCanonicallyEquivalentIDsAreDuplicates]' started.
+Test Case '-[StudyPlannerTests.StudyPlanDuplicatesAndOrderingTests testCanonicallyEquivalentIDsAreDuplicates]' passed (0.000 seconds).
+Test Case '-[StudyPlannerTests.StudyPlanDuplicatesAndOrderingTests testCategoryOrderDoesNotDependOnInsertionOrder]' started.
+Test Case '-[StudyPlannerTests.StudyPlanDuplicatesAndOrderingTests testCategoryOrderDoesNotDependOnInsertionOrder]' passed (0.000 seconds).
+Test Case '-[StudyPlannerTests.StudyPlanDuplicatesAndOrderingTests testDuplicateIDThrowsDuplicateID]' started.
+Test Case '-[StudyPlannerTests.StudyPlanDuplicatesAndOrderingTests testDuplicateIDThrowsDuplicateID]' passed (0.000 seconds).
+Test Case '-[StudyPlannerTests.StudyPlanDuplicatesAndOrderingTests testDuplicateInKeyedJSONThrowsDuplicateID]' started.
+Test Case '-[StudyPlannerTests.StudyPlanDuplicatesAndOrderingTests testDuplicateInKeyedJSONThrowsDuplicateID]' passed (0.000 seconds).
+Test Case '-[StudyPlannerTests.StudyPlanDuplicatesAndOrderingTests testDuplicateInTopLevelArrayThrowsDuplicateID]' started.
+Test Case '-[StudyPlannerTests.StudyPlanDuplicatesAndOrderingTests testDuplicateInTopLevelArrayThrowsDuplicateID]' passed (0.000 seconds).
+Test Case '-[StudyPlannerTests.StudyPlanDuplicatesAndOrderingTests testEqualTitlesAreOrderedByID]' started.
+Test Case '-[StudyPlannerTests.StudyPlanDuplicatesAndOrderingTests testEqualTitlesAreOrderedByID]' passed (0.000 seconds).
+Test Case '-[StudyPlannerTests.StudyPlanDuplicatesAndOrderingTests testFirstRepeatInDetectionOrderIsReported]' started.
+Test Case '-[StudyPlannerTests.StudyPlanDuplicatesAndOrderingTests testFirstRepeatInDetectionOrderIsReported]' passed (0.000 seconds).
+Test Case '-[StudyPlannerTests.StudyPlanDuplicatesAndOrderingTests testIDsDifferingInCaseOrWhitespaceAreNotDuplicates]' started.
+Test Case '-[StudyPlannerTests.StudyPlanDuplicatesAndOrderingTests testIDsDifferingInCaseOrWhitespaceAreNotDuplicates]' passed (0.000 seconds).
+Test Case '-[StudyPlannerTests.StudyPlanDuplicatesAndOrderingTests testItemsInCategoryAreOrderedByTitle]' started.
+Test Case '-[StudyPlannerTests.StudyPlanDuplicatesAndOrderingTests testItemsInCategoryAreOrderedByTitle]' passed (0.000 seconds).
+Test Case '-[StudyPlannerTests.StudyPlanDuplicatesAndOrderingTests testItemsKeepInsertionOrder]' started.
+Test Case '-[StudyPlannerTests.StudyPlanDuplicatesAndOrderingTests testItemsKeepInsertionOrder]' passed (0.000 seconds).
+Test Case '-[StudyPlannerTests.StudyPlanDuplicatesAndOrderingTests testTitleOrderingIgnoresCase]' started.
+Test Case '-[StudyPlannerTests.StudyPlanDuplicatesAndOrderingTests testTitleOrderingIgnoresCase]' passed (0.000 seconds).
+Test Case '-[StudyPlannerTests.StudyPlanDuplicatesAndOrderingTests testTitleOrderingIsNumericAware]' started.
+Test Case '-[StudyPlannerTests.StudyPlanDuplicatesAndOrderingTests testTitleOrderingIsNumericAware]' passed (0.000 seconds).
+Test Suite 'StudyPlanDuplicatesAndOrderingTests' passed at 2026-09-30 14:59:29.134.
+	 Executed 12 tests, with 0 failures (0 unexpected) in 0.002 (0.003) seconds
+Test Suite 'StudyPlanImportMergingTests' started at 2026-09-30 14:59:29.134.
+Test Case '-[StudyPlannerTests.StudyPlanImportMergingTests testDuplicateIncomingIDsThrowFirstRepeatAndLeavePlanUnchanged]' started.
+Test Case '-[StudyPlannerTests.StudyPlanImportMergingTests testDuplicateIncomingIDsThrowFirstRepeatAndLeavePlanUnchanged]' passed (0.000 seconds).
+Test Case '-[StudyPlannerTests.StudyPlanImportMergingTests testEmptyImportChangesNothing]' started.
+Test Case '-[StudyPlannerTests.StudyPlanImportMergingTests testEmptyImportChangesNothing]' passed (0.000 seconds).
+Test Case '-[StudyPlannerTests.StudyPlanImportMergingTests testExistingIDInImportIsReplacementNotDuplicate]' started.
+Test Case '-[StudyPlannerTests.StudyPlanImportMergingTests testExistingIDInImportIsReplacementNotDuplicate]' passed (0.000 seconds).
+Test Case '-[StudyPlannerTests.StudyPlanImportMergingTests testFailedImportDoesNotApplyReplacementsOrAppends]' started.
+Test Case '-[StudyPlannerTests.StudyPlanImportMergingTests testFailedImportDoesNotApplyReplacementsOrAppends]' passed (0.000 seconds).
+Test Case '-[StudyPlannerTests.StudyPlanImportMergingTests testIdenticalDuplicateIncomingItemsAreRejected]' started.
+Test Case '-[StudyPlannerTests.StudyPlanImportMergingTests testIdenticalDuplicateIncomingItemsAreRejected]' passed (0.000 seconds).
+Test Case '-[StudyPlannerTests.StudyPlanImportMergingTests testImportIntoEmptyPlanOrdersAllByID]' started.
+Test Case '-[StudyPlannerTests.StudyPlanImportMergingTests testImportIntoEmptyPlanOrdersAllByID]' passed (0.000 seconds).
+Test Case '-[StudyPlannerTests.StudyPlanImportMergingTests testImportReplacesExistingInPlaceAndAppendsNewInIDOrder]' started.
+Test Case '-[StudyPlannerTests.StudyPlanImportMergingTests testImportReplacesExistingInPlaceAndAppendsNewInIDOrder]' passed (0.000 seconds).
+Test Case '-[StudyPlannerTests.StudyPlanImportMergingTests testMergedPlanWorksWithQueriesAndCompletion]' started.
+Test Case '-[StudyPlannerTests.StudyPlanImportMergingTests testMergedPlanWorksWithQueriesAndCompletion]' passed (0.000 seconds).
+Test Case '-[StudyPlannerTests.StudyPlanImportMergingTests testNewIDsAreOrderedNumericallyAndCaseInsensitively]' started.
+Test Case '-[StudyPlannerTests.StudyPlanImportMergingTests testNewIDsAreOrderedNumericallyAndCaseInsensitively]' passed (0.000 seconds).
+Test Case '-[StudyPlannerTests.StudyPlanImportMergingTests testReplacementIsFullIncludingCompletionStatus]' started.
+Test Case '-[StudyPlannerTests.StudyPlanImportMergingTests testReplacementIsFullIncludingCompletionStatus]' passed (0.000 seconds).
+Test Case '-[StudyPlannerTests.StudyPlanImportMergingTests testReplacementPositionsComeFromPlanNotFromImportOrder]' started.
+Test Case '-[StudyPlannerTests.StudyPlanImportMergingTests testReplacementPositionsComeFromPlanNotFromImportOrder]' passed (0.000 seconds).
+Test Suite 'StudyPlanImportMergingTests' passed at 2026-09-30 14:59:29.137.
+	 Executed 11 tests, with 0 failures (0 unexpected) in 0.002 (0.003) seconds
+Test Suite 'StudyPlanQueriesAndCompletionTests' started at 2026-09-30 14:59:29.137.
+Test Case '-[StudyPlannerTests.StudyPlanQueriesAndCompletionTests testCompletionIsVisibleInQueriesAndEncodedJSON]' started.
+Test Case '-[StudyPlannerTests.StudyPlanQueriesAndCompletionTests testCompletionIsVisibleInQueriesAndEncodedJSON]' passed (0.000 seconds).
+Test Case '-[StudyPlannerTests.StudyPlanQueriesAndCompletionTests testEmptyPlanQueriesReturnEmptyAndZero]' started.
+Test Case '-[StudyPlannerTests.StudyPlanQueriesAndCompletionTests testEmptyPlanQueriesReturnEmptyAndZero]' passed (0.000 seconds).
+Test Case '-[StudyPlannerTests.StudyPlanQueriesAndCompletionTests testIncompleteMinutesIsZeroWhenEverythingIsCompleted]' started.
+Test Case '-[StudyPlannerTests.StudyPlanQueriesAndCompletionTests testIncompleteMinutesIsZeroWhenEverythingIsCompleted]' passed (0.000 seconds).
+Test Case '-[StudyPlannerTests.StudyPlanQueriesAndCompletionTests testIncompleteMinutesSumsOnlyIncompleteItems]' started.
+Test Case '-[StudyPlannerTests.StudyPlanQueriesAndCompletionTests testIncompleteMinutesSumsOnlyIncompleteItems]' passed (0.000 seconds).
+Test Case '-[StudyPlannerTests.StudyPlanQueriesAndCompletionTests testItemsInCategoryReturnsOnlyThatCategory]' started.
+Test Case '-[StudyPlannerTests.StudyPlanQueriesAndCompletionTests testItemsInCategoryReturnsOnlyThatCategory]' passed (0.000 seconds).
+Test Case '-[StudyPlannerTests.StudyPlanQueriesAndCompletionTests testItemsInCategoryWithoutItemsIsEmpty]' started.
+Test Case '-[StudyPlannerTests.StudyPlanQueriesAndCompletionTests testItemsInCategoryWithoutItemsIsEmpty]' passed (0.000 seconds).
+Test Case '-[StudyPlannerTests.StudyPlanQueriesAndCompletionTests testMarkCompletedChangesOnlyThatItem]' started.
+Test Case '-[StudyPlannerTests.StudyPlanQueriesAndCompletionTests testMarkCompletedChangesOnlyThatItem]' passed (0.000 seconds).
+Test Case '-[StudyPlannerTests.StudyPlanQueriesAndCompletionTests testMarkCompletedIsIdempotent]' started.
+Test Case '-[StudyPlannerTests.StudyPlanQueriesAndCompletionTests testMarkCompletedIsIdempotent]' passed (0.000 seconds).
+Test Case '-[StudyPlannerTests.StudyPlanQueriesAndCompletionTests testMarkCompletedOnEmptyPlanThrowsUnknownID]' started.
+Test Case '-[StudyPlannerTests.StudyPlanQueriesAndCompletionTests testMarkCompletedOnEmptyPlanThrowsUnknownID]' passed (0.000 seconds).
+Test Case '-[StudyPlannerTests.StudyPlanQueriesAndCompletionTests testMarkCompletedOnItemAlreadyCompletedInFixture]' started.
+Test Case '-[StudyPlannerTests.StudyPlanQueriesAndCompletionTests testMarkCompletedOnItemAlreadyCompletedInFixture]' passed (0.000 seconds).
+Test Case '-[StudyPlannerTests.StudyPlanQueriesAndCompletionTests testMarkCompletedWithUnknownIDThrowsAndLeavesPlanUnchanged]' started.
+Test Case '-[StudyPlannerTests.StudyPlanQueriesAndCompletionTests testMarkCompletedWithUnknownIDThrowsAndLeavesPlanUnchanged]' passed (0.000 seconds).
+Test Suite 'StudyPlanQueriesAndCompletionTests' passed at 2026-09-30 14:59:29.139.
+	 Executed 11 tests, with 0 failures (0 unexpected) in 0.002 (0.003) seconds
+Test Suite 'StudyPlannerPublicTests' started at 2026-09-30 14:59:29.139.
+Test Case '-[StudyPlannerTests.StudyPlannerPublicTests testBlankTitleIsRejected]' started.
+Test Case '-[StudyPlannerTests.StudyPlannerPublicTests testBlankTitleIsRejected]' passed (0.000 seconds).
+Test Case '-[StudyPlannerTests.StudyPlannerPublicTests testIncompleteMinutesAndCompletion]' started.
+Test Case '-[StudyPlannerTests.StudyPlannerPublicTests testIncompleteMinutesAndCompletion]' passed (0.000 seconds).
+Test Case '-[StudyPlannerTests.StudyPlannerPublicTests testValidItemStoresValues]' started.
+Test Case '-[StudyPlannerTests.StudyPlannerPublicTests testValidItemStoresValues]' passed (0.000 seconds).
+Test Suite 'StudyPlannerPublicTests' passed at 2026-09-30 14:59:29.140.
+	 Executed 3 tests, with 0 failures (0 unexpected) in 0.000 (0.001) seconds
+Test Suite 'StudyPlannerPackageTests.xctest' passed at 2026-09-30 14:59:29.140.
+	 Executed 58 tests, with 0 failures (0 unexpected) in 0.014 (0.020) seconds
+Test Suite 'All tests' passed at 2026-09-30 14:59:29.140.
+	 Executed 58 tests, with 0 failures (0 unexpected) in 0.014 (0.021) seconds
+◇ Test run started.
+↳ Testing Library Version: 1501
+↳ Target Platform: arm64e-apple-macos14.0
+✔ Test run with 0 tests in 0 suites passed after 0.001 seconds.
